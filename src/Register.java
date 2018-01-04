@@ -12,6 +12,7 @@ public class Register extends HttpServlet{
     private String idCardNum = "";
     private String pushAddress = "";
     private Integer autoStopPushMinutes;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         System.out.println("注册界面");
