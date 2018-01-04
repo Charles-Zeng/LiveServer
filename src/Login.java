@@ -1,7 +1,6 @@
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class Login extends HttpServlet {
 
@@ -15,15 +14,20 @@ public class Login extends HttpServlet {
         String userName = req.getParameter("username");
         String password = req.getParameter("password");
 
-        String message = "用户名或密码错误";
-
-        if (userName == null || password == null)
+        if (userName.isEmpty() || password.isEmpty())
         {
-            req.setAttribute("message", message);
+            req.setAttribute("message", "用户名密码不能为空");
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
-        } else {
-            req.getRequestDispatcher("/register.jsp").forward(req, resp);
+            return;
         }
+
+        if (!userName.equals("111"))
+        {
+            req.setAttribute("message", "用户名或密码错误");
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            return;
+        }
+        resp.sendRedirect("/manager.jsp");
     }
 
     @Override

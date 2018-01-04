@@ -16,7 +16,7 @@
 
     <servlet>
         <servlet-name>Manager</servlet-name>
-        <servlet-class>Manage</servlet-class>
+        <servlet-class>Manager</servlet-class>
     </servlet>
 
     <servlet-mapping>

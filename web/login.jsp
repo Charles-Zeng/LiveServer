@@ -14,7 +14,8 @@
     <title>Login</title>
 </head>
 <body>
-<div align="center">
+
+<div id="login" align="center">
     <form id="id_login" action="/login" method="post">
         <table border="1" style="border-collapse:collapse;">
             <tr align = "center">
@@ -30,7 +31,7 @@
                 <td>密  码：</td>
                 <td>
                     <input type="password" name="password">
-                    <span style = "color:red; font-size:13px;" id = "td2"><%=message%></span>
+                    <span style = "color:red; font-size:13px;" id = "errorMsg"><% if(message != null) out.print(message); %></span>
                 </td>
             </tr>
             <tr>
@@ -43,4 +44,5 @@
     </form>
 </div>
 </body>
+
 </html>

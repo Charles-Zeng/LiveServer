@@ -16,7 +16,7 @@
 
     <servlet>
         <servlet-name>Manager</servlet-name>
-        <servlet-class>Manage</servlet-class>
+        <servlet-class>Manager</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -35,7 +35,7 @@
     </servlet-mapping>
     
     <listener>
-        <listener-class>ServiceLinster</listener-class>
+        <listener-class>ServiceListener</listener-class>
     </listener>
 
 </web-app>
