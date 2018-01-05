@@ -3,6 +3,20 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/*
+read config
+        web.xml
+        <context-param>
+        <param-name>myParam</param-name>
+        <param-value>the value</param-value>
+        </context-param>
+
+        String myContextParam =
+        request.getSession()
+        .getServletContext()
+        .getInitParameter("myParam");
+*/
+
 
 public class Manager extends HttpServlet{
     @Override

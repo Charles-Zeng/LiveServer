@@ -3,8 +3,6 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 public class Register extends HttpServlet{
-    private String username = "";
-    private String password = "";
     private String confirmPwd = "";
     private String tel = "";
     private String name = "";
@@ -15,10 +13,16 @@ public class Register extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        doPost(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         System.out.println("注册界面");
 
-        username = req.getParameter("username");
-        password = req.getParameter("password");
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(req.getParameter("username"));
+        userInfo.setPassword(req.getParameter("password"));
         confirmPwd = req.getParameter("confirmPwd");
         tel = req.getParameter("tel");
         name = req.getParameter("name");
@@ -27,11 +31,9 @@ public class Register extends HttpServlet{
         pushAddress = req.getParameter("pushAddress");
         autoStopPushMinutes = Integer.valueOf(req.getParameter("autoStopPushMinutes"));
 
-        resp.sendRedirect("/login.jsp");
-    }
+        UserInfoDao dao = new UserInfoDao();
+        dao.addUserInfo(userInfo);
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        doGet(req, resp);
+        resp.sendRedirect("/login.jsp");
     }
 }
