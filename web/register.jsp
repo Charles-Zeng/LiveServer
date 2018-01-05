@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<% String pwdTips = (String)(request.getAttribute("pwdTips")); %>
+
 <html>
 <head>
     <title>注册</title>
@@ -23,6 +26,7 @@
               </tr>
               <tr>
                   <td>确认密码：</td> <td><input type="password" name="confirmPwd"></td>
+                  <span style = "color:red; font-size:13px;" id = "pwdTips"><% if(pwdTips != null) out.print(pwdTips); %></span>
               </tr>
               <tr>
                   <td>电  话：</td> <td><input type="text" name="tel"></td>

@@ -6,17 +6,17 @@
 
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>Login</servlet-class>
+        <servlet-class>com.live.controller.Login</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>Register</servlet-name>
-        <servlet-class>Register</servlet-class>
+        <servlet-class>com.live.controller.Register</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>Manager</servlet-name>
-        <servlet-class>Manager</servlet-class>
+        <servlet-class>com.live.controller.Manager</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -35,7 +35,7 @@
     </servlet-mapping>
     
     <listener>
-        <listener-class>ServiceListener</listener-class>
+        <listener-class>com.live.controller.ServiceListener</listener-class>
     </listener>
 
 </web-app>

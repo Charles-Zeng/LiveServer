@@ -1,3 +1,5 @@
+package com.live.model;
+
 public class UserInfo {
     private String username;
     private String password;

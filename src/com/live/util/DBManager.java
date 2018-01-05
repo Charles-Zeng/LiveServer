@@ -1,3 +1,5 @@
+package com.live.util;
+
 import java.sql.*;
 import java.io.*;
 import java.util.Properties;
@@ -43,25 +45,6 @@ public class DBManager {
 
     public void closeConnection(Connection conn){
         try{
-            conn.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void closeConnection(Connection conn, Statement stmt){
-        try{
-            stmt.close();
-            conn.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void closeConnection(Connection conn, Statement stmt, ResultSet rs){
-        try{
-            rs.close();
-            stmt.close();
             conn.close();
         }catch (SQLException e){
             e.printStackTrace();
