@@ -6,12 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <% String message = (String)(request.getAttribute("message")); %>
 
 <html>
 <head>
-    <title>Login</title>
+    <title>登陆界面</title>
+    <link href="/static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -43,6 +46,10 @@
         </table>
     </form>
 </div>
+
+<script src="/static/jquery/jquery-3.2.1.min.js"></script>
+<script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

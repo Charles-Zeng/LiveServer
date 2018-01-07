@@ -8,13 +8,6 @@ import com.live.model.*;
 import com.live.dao.*;
 
 public class Register extends HttpServlet{
-    private String confirmPwd = "";
-    private String tel = "";
-    private String name = "";
-    private String address = "";
-    private String idCardNum = "";
-    private String pushAddress = "";
-    private Integer autoStopPushMinutes;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -24,6 +17,14 @@ public class Register extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         System.out.println("注册界面");
+
+        UserInfoDao dao = new UserInfoDao();
+        UserInfo userQuery = dao.getUserInfoByUsername(req.getParameter("username"));
+        if (userQuery != null ){
+            req.setAttribute("usernameTips", "用户已存在");
+            req.getRequestDispatcher("/register.jsp").forward(req, resp);
+            return;
+        }
 
         if(!req.getParameter("password").equals(req.getParameter("confirmPwd"))){
             req.setAttribute("pwdTips", "两次输入密码不一致");
@@ -41,7 +42,7 @@ public class Register extends HttpServlet{
         userInfo.setPushAddress(req.getParameter("pushAddress"));
         userInfo.setAutoStopPushMinutes(Integer.valueOf(req.getParameter("autoStopPushMinutes")));
 
-        UserInfoDao dao = new UserInfoDao();
+
         dao.addUserInfo(userInfo);
 
         resp.sendRedirect("/login.jsp");

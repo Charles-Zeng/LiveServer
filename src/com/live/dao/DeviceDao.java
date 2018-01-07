@@ -11,8 +11,8 @@ public class DeviceDao {
         DBManager dbManager = new DBManager();
         Connection conn = dbManager.getConnection();
         try{
-            String sql = " insert into device(ip, mac, imei, gps, serviceName, username) " +
-                    " values (?, ?, ?, ?, ?, ?, ?, ?) ";
+            String sql = " insert into device(ip, mac, imei, gps, serviceName, username, status) " +
+                    " values (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, device.getIp());
             pstmt.setString(2, device.getMac());
@@ -20,6 +20,7 @@ public class DeviceDao {
             pstmt.setString(4, device.getGps());
             pstmt.setString(5, device.getServiceName());
             pstmt.setString(6, device.getUsername());
+            pstmt.setInt(7, device.getStatus());
             pstmt.executeUpdate();
             pstmt.close();
 
@@ -31,7 +32,7 @@ public class DeviceDao {
     }
 
     public Device getDeviceByServiceName(String serviceName){
-        Device device = new Device();
+        Device device = null;
         DBManager dbManager = new DBManager();
         Connection conn = dbManager.getConnection();
         try{
@@ -42,12 +43,14 @@ public class DeviceDao {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()){
+                device = new Device();
                 device.setIp(rs.getString("ip"));
                 device.setMac(rs.getString("mac"));
                 device.setImei(rs.getString("imei"));
                 device.setGps(rs.getString("gps"));
                 device.setServiceName(rs.getString("serviceName"));
                 device.setUsername(rs.getString("username"));
+                device.setStatus(rs.getInt("status"));
             }
 
             rs.close();
@@ -59,5 +62,38 @@ public class DeviceDao {
         }
 
         return device;
+    }
+
+    public List<Device> getAllDevice(){
+        List<Device> devices = new ArrayList<Device>();
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = "select * from device";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()){
+                Device device = new Device();
+                device.setIp(rs.getString("ip"));
+                device.setMac(rs.getString("mac"));
+                device.setImei(rs.getString("imei"));
+                device.setGps(rs.getString("gps"));
+                device.setServiceName(rs.getString("serviceName"));
+                device.setUsername(rs.getString("username"));
+                device.setStatus(rs.getInt("status"));
+                devices.add(device);
+            }
+
+            rs.close();
+            pstmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbManager.closeConnection(conn);
+        }
+
+        return devices;
     }
 }

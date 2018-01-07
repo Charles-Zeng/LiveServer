@@ -7,6 +7,7 @@ public class Device {
     private String gps;
     private String serviceName;
     private String username;
+    private int status;
 
     public Device() {}
 
@@ -56,5 +57,13 @@ public class Device {
 
     public String getUsername(){
         return username;
+    }
+
+    public void setStatus(int status){
+        this.status = status;
+    }
+
+    public int getStatus(){
+        return status;
     }
 }

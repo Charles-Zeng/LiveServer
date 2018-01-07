@@ -4,19 +4,33 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <welcome-file-list>
+        <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
+
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>Login</servlet-class>
+        <servlet-class>com.live.controller.Login</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>Register</servlet-name>
-        <servlet-class>Register</servlet-class>
+        <servlet-class>com.live.controller.Register</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>Manager</servlet-name>
-        <servlet-class>Manager</servlet-class>
+        <servlet-class>com.live.controller.Manager</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>UserManager</servlet-name>
+        <servlet-class>com.live.controller.UserManager</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DeviceManager</servlet-name>
+        <servlet-class>com.live.controller.DeviceManager</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -33,9 +47,19 @@
         <servlet-name>Manager</servlet-name>
         <url-pattern>/manager</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>UserManager</servlet-name>
+        <url-pattern>/userManager</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DeviceManager</servlet-name>
+        <url-pattern>/deviceManager</url-pattern>
+    </servlet-mapping>
     
     <listener>
-        <listener-class>ServiceListener</listener-class>
+        <listener-class>com.live.controller.ServiceListener</listener-class>
     </listener>
 
 </web-app>

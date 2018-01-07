@@ -24,7 +24,7 @@ CREATE TABLE user_info(
 --
 -- Table structure for table `device`
 --
-DROP TABLE IF EXISTS 'device';
+DROP TABLE IF EXISTS `device`;
 CREATE TABLE device(
   ip VARCHAR (50) NOT NULL,
   mac VARCHAR (100) NOT NULL,
@@ -32,5 +32,6 @@ CREATE TABLE device(
   gps VARCHAR (100),
   serviceName VARCHAR (100) UNIQUE ,
   username VARCHAR(255) NOT NULL,
-  PRIMARY KEY('ip')
+  status INT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY(`ip`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,6 +1,7 @@
 package com.live.dao;
 
 import java.sql.*;
+import java.util.*;
 import com.live.model.*;
 import com.live.util.*;
 
@@ -28,5 +29,70 @@ public class UserInfoDao {
         }finally {
             dbManager.closeConnection(conn);
         }
+    }
+
+    public UserInfo getUserInfoByUsername(String username){
+        UserInfo userInfo = null;
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = " SELECT * FROM user_info WHERE username = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                userInfo = new UserInfo();
+                userInfo.setUsername(rs.getString("username"));
+                userInfo.setPassword(rs.getString("password"));
+                userInfo.setTel(rs.getString("tel"));
+                userInfo.setName(rs.getString("name"));
+                userInfo.setAddress(rs.getString("address"));
+                userInfo.setIdCardNum(rs.getString("idCardNum"));
+                userInfo.setPushAddress(rs.getString("pushAddress"));
+                userInfo.setAutoStopPushMinutes(rs.getInt("autoStopPushMinutes"));
+            }
+            rs.close();
+            pstmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbManager.closeConnection(conn);
+        }
+
+        return userInfo;
+    }
+
+    public List<UserInfo> getAllUserInfo(){
+        List<UserInfo> userInfoList = new ArrayList<UserInfo>();
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = " SELECT * FROM user_info";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()){
+                UserInfo userInfo = new UserInfo();
+                userInfo.setUsername(rs.getString("username"));
+                userInfo.setPassword(rs.getString("password"));
+                userInfo.setTel(rs.getString("tel"));
+                userInfo.setName(rs.getString("name"));
+                userInfo.setAddress(rs.getString("address"));
+                userInfo.setIdCardNum(rs.getString("idCardNum"));
+                userInfo.setPushAddress(rs.getString("pushAddress"));
+                userInfo.setAutoStopPushMinutes(rs.getInt("autoStopPushMinutes"));
+
+                userInfoList.add(userInfo);
+            }
+            rs.close();
+            pstmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbManager.closeConnection(conn);
+        }
+
+        return userInfoList;
     }
 }

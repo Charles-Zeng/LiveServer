@@ -1,5 +1,8 @@
 package com.live.controller;
 
+import com.live.dao.UserInfoDao;
+import com.live.model.UserInfo;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -8,7 +11,11 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        resp.setContentType("text/html");
+        doPost(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         System.out.println("登录界面");
 
         req.setCharacterEncoding("utf-8");
@@ -23,17 +30,14 @@ public class Login extends HttpServlet {
             return;
         }
 
-        if (!userName.equals("111"))
+        UserInfoDao dao = new UserInfoDao();
+        UserInfo userInfo = dao.getUserInfoByUsername(userName);
+        if (userInfo == null || !userInfo.getPassword().equals(password))
         {
             req.setAttribute("message", "用户名或密码错误");
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
             return;
         }
-        resp.sendRedirect("/manager.jsp");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        doGet(req, resp);
+        resp.sendRedirect("/userManager.jsp");
     }
 }
