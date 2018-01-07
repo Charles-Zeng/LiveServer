@@ -15,7 +15,7 @@
     <link href="/static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default" role="navigation" style="background-color:steelblue;font-size: large">
     <div class="container-fluid">
         <div>
             <ul class="nav navbar-nav navbar-left">
@@ -30,7 +30,7 @@
 </nav>
 
 <div class="container">
-    <table border=1>
+    <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
             <th>IP</th>
