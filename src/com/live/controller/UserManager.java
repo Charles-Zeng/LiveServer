@@ -17,6 +17,9 @@ public class UserManager extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         System.out.println("用户管理界面");
 
+        req.setCharacterEncoding("utf-8");
+        resp.setCharacterEncoding("utf-8");
+
         UserInfoDao dao = new UserInfoDao();
 
         req.setAttribute("users", dao.getAllUserInfo());

@@ -17,6 +17,9 @@ public class DeviceManager  extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         System.out.println("用户管理界面");
 
+        req.setCharacterEncoding("utf-8");
+        resp.setCharacterEncoding("utf-8");
+
         DeviceDao dao = new DeviceDao();
 
         req.setAttribute("devices", dao.getAllDevice());

@@ -18,6 +18,9 @@ public class Register extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         System.out.println("注册界面");
 
+        req.setCharacterEncoding("utf-8");
+        resp.setCharacterEncoding("utf-8");
+
         UserInfoDao dao = new UserInfoDao();
         UserInfo userQuery = dao.getUserInfoByUsername(req.getParameter("username"));
         if (userQuery != null ){

@@ -20,6 +20,7 @@ public class Login extends HttpServlet {
 
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
+
         String userName = req.getParameter("username");
         String password = req.getParameter("password");
 
@@ -38,6 +39,6 @@ public class Login extends HttpServlet {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
             return;
         }
-        resp.sendRedirect("/userManager.jsp");
+        resp.sendRedirect("/userManager");
     }
 }
