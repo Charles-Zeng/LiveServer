@@ -14,12 +14,12 @@ public class ServiceListener implements ServletContextListener{
 
     @Override
     public void contextInitialized(ServletContextEvent arg) {
-// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
         if(null==socketThread)
         {
-//新建线程类
+            //新建线程类
             socketThread=new SocketThread(null);
-//启动线程
+            //启动线程
             socketThread.start();
         }
     }

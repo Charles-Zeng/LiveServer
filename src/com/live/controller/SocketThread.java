@@ -5,8 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 public class SocketThread extends Thread
 {
-    public static final int PORT = 4800;//监听的端口号
-    private ServerSocket serverSocket = null;
+    public static final int PORT = 9800;//监听的端口号
+    private static  ServerSocket serverSocket = null;
     public SocketThread(ServerSocket serverScoket){
         try {
             if(null == serverSocket){
@@ -18,6 +18,20 @@ public class SocketThread extends Thread
             e.printStackTrace();
         }
     }
+    //单例
+    /*private static  SocketThread  instance;
+    public static SocketThread getInstance(){
+        if(instance == null){
+            try {
+                instance = new SocketThread(serverSocket);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return instance;
+    }*/
     public void run(){
         while(true){
             try {
@@ -28,9 +42,26 @@ public class SocketThread extends Thread
                 }
                 Socket socket = serverSocket.accept();
                 if(null != socket && !socket.isClosed()){
-//处理接受的数据
+                    //处理接受的数据
                     Thread t = new Thread(new SocketOperate(socket));
-                    t.start();
+                    t.run();
+                }else{
+                    break;
+                }
+            }catch (Exception e) {
+                System.out.println("SocketThread创建socket服务出错");
+                e.printStackTrace();
+            }
+        }
+    }
+    public void SendCmd(){
+        while(true){
+            try {
+                Socket socket = serverSocket.accept();
+                if(null != socket && !socket.isClosed()){
+                    //处理接受的数据
+                    SocketOperate sockOper = new SocketOperate(socket);
+                    sockOper.getInstance().SendCmd();
                 }else{
                     break;
                 }
@@ -47,7 +78,7 @@ public class SocketThread extends Thread
                 serverSocket.close();
             }
         } catch (IOException e) {
-// TODO Auto-generated catch block
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
