@@ -20,7 +20,7 @@ public class TcpHandler extends IoHandlerAdapter{
             throws Exception {
         // TODO Auto-generated method stub
         super.exceptionCaught(session, cause);
-        System.out.println("exceptionCaught" + cause);
+        System.out.println("exceptionCaught " + cause);
     }
 
     @Override

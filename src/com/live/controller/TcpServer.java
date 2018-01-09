@@ -45,11 +45,11 @@ public class TcpServer {
     }
 
     void sendMsgToClient(String ip, String msg){
+        System.out.println("sendMsgToClient: ip " + ip + " msg " + msg);
         for (IoSession ioSession : acceptor.getManagedSessions().values()){
             if (ip.equals((String)ioSession.getAttribute(ipAttribute))){
                 ioSession.write(msg);
             }
         }
-
     }
 }

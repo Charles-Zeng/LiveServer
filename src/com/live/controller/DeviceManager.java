@@ -15,10 +15,17 @@ public class DeviceManager  extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        System.out.println("用户管理界面");
+        System.out.println("设备管理界面");
 
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
+
+        String action = req.getParameter("action");
+        String ip = req.getParameter("ip");
+
+        if (action != null){
+            TcpServer.getInstance().sendMsgToClient(ip, action);
+        }
 
         DeviceDao dao = new DeviceDao();
 
