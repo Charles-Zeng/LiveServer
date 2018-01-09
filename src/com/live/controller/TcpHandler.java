@@ -42,13 +42,14 @@ public class TcpHandler extends IoHandlerAdapter{
         if (pkgType.equals("Login")){
             //LoginReq loginReq = JSON.parse(message.toString(), LoginReq.class);
             JSONObject respJson = new JSONObject();
+            respJson.put("TYPE", "LOGIN");
             respJson.put("LoginRep", "LOGIN_OK");
-            session.write(respJson.toString());
+            session.write(respJson.toString() + "\r\n");
         }else if (pkgType.equals("Heart")){
             JSONObject HeratObject = new JSONObject();
             HeratObject.put("TYPE", "HEART");
             HeratObject.put("HeartRep", "HEART_OK");
-            session.write(HeratObject.toString());
+            session.write(HeratObject.toString() + "\r\n");
         }
     }
 

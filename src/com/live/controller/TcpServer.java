@@ -2,7 +2,8 @@ package com.live.controller;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-
+import java.nio.charset.Charset;
+import org.apache.mina.filter.codec.textline.LineDelimiter;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
 import org.apache.mina.filter.logging.LoggingFilter;
@@ -27,6 +28,7 @@ public class TcpServer {
         try {
             //第一步 创建一个NioSocketAcceptor 对象
             acceptor = new NioSocketAcceptor();
+            acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
             //第二步设置handler
             acceptor.setHandler(new TcpHandler());
             //第三步,获取拦截器，发来的消息都需要通过拦截器拦截之后才能接收到
