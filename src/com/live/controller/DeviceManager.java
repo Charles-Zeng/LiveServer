@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import com.alibaba.fastjson.JSONObject;
 import com.live.dao.*;
+import com.live.model.Device;
 
 public class DeviceManager  extends HttpServlet{
 
@@ -21,20 +22,28 @@ public class DeviceManager  extends HttpServlet{
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
 
+        // Set refresh, autoload time as 5 seconds
+        //resp.setIntHeader("Refresh", 3);
+
         String action = req.getParameter("action");
         String ip = req.getParameter("ip");
 
         if (action != null){
             String operator;
+            int status = 0;
             if (action.equals("switchOn")){
                 operator = "On";
+                status = 1;
             } else {
                 operator = "Off";
+                status = 0;
             }
             JSONObject cmdJson = new JSONObject();
             cmdJson.put("Type", "Cmd");
             cmdJson.put("Operator", operator);
             TcpServer.getInstance().sendMsgToClient(ip, cmdJson.toString() + "\r\n");
+            DeviceDao updateDao = new DeviceDao();
+            updateDao.updateDeviceStatusByIp(ip, status);
         }
 
         DeviceDao dao = new DeviceDao();

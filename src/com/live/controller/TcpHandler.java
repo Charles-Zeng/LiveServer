@@ -97,6 +97,9 @@ public class TcpHandler extends IoHandlerAdapter{
         device.setIp(clientIp);
         device.setUsername(reqJson.getString("UserName"));
         device.setServiceName(reqJson.getString("ServiceName"));
+        device.setMac(reqJson.getString("Mac"));
+        device.setImei(reqJson.getString("Imei"));
+        device.setGps(reqJson.getString("Gps"));
         // 默认状态为开始采集
         device.setStatus(1);
 

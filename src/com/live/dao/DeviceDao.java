@@ -113,4 +113,22 @@ public class DeviceDao {
             dbManager.closeConnection(conn);
         }
     }
+
+    public void updateDeviceStatusByIp(String ip, int status){
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = " UPDATE device SET status = ? WHERE ip = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,status);
+            pstmt.setString(2, ip);
+            pstmt.executeUpdate();
+            pstmt.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbManager.closeConnection(conn);
+        }
+    }
 }
