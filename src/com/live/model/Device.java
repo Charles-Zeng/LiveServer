@@ -1,13 +1,13 @@
 package com.live.model;
 
 public class Device {
-    private String ip;
-    private String mac;
-    private String imei;
-    private String gps;
-    private String serviceName;
-    private String username;
-    private int status;
+    private String ip = "";
+    private String mac = "";
+    private String imei = "";
+    private String gps = "";
+    private String serviceName = "";
+    private String username = "";
+    private int status = 1;
 
     public Device() {}
 

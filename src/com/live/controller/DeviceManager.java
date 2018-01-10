@@ -4,6 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+import com.alibaba.fastjson.JSONObject;
 import com.live.dao.*;
 
 public class DeviceManager  extends HttpServlet{
@@ -24,7 +25,16 @@ public class DeviceManager  extends HttpServlet{
         String ip = req.getParameter("ip");
 
         if (action != null){
-            TcpServer.getInstance().sendMsgToClient(ip, action);
+            String operator;
+            if (action.equals("switchOn")){
+                operator = "On";
+            } else {
+                operator = "Off";
+            }
+            JSONObject cmdJson = new JSONObject();
+            cmdJson.put("Type", "Cmd");
+            cmdJson.put("Operator", operator);
+            TcpServer.getInstance().sendMsgToClient(ip, cmdJson.toString() + "\r\n");
         }
 
         DeviceDao dao = new DeviceDao();

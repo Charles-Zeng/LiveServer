@@ -12,7 +12,7 @@ public class DeviceDao {
         Connection conn = dbManager.getConnection();
         try{
             String sql = " insert into device(ip, mac, imei, gps, serviceName, username, status) " +
-                    " values (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+                    " values (?, ?, ?, ?, ?, ?, ?) ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, device.getIp());
             pstmt.setString(2, device.getMac());
@@ -95,5 +95,22 @@ public class DeviceDao {
         }
 
         return devices;
+    }
+
+    public void deleteDeviceByIp(String ip){
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = " DELETE FROM device WHERE ip = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, ip);
+            pstmt.executeUpdate();
+            pstmt.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbManager.closeConnection(conn);
+        }
     }
 }

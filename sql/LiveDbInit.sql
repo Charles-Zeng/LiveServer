@@ -27,7 +27,7 @@ CREATE TABLE user_info(
 DROP TABLE IF EXISTS `device`;
 CREATE TABLE device(
   ip VARCHAR (50) NOT NULL,
-  mac VARCHAR (100) NOT NULL,
+  mac VARCHAR (100),
   imei VARCHAR (100),
   gps VARCHAR (100),
   serviceName VARCHAR (100) UNIQUE ,

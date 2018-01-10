@@ -9,6 +9,7 @@ import org.apache.mina.core.session.IoSession;
 
 import com.alibaba.fastjson.JSON;
 import com.live.model.*;
+import com.live.dao.*;
 
 public class TcpHandler extends IoHandlerAdapter{
 
@@ -37,19 +38,16 @@ public class TcpHandler extends IoHandlerAdapter{
         super.messageReceived(session, message);
         System.out.println("messageReceived:" + message);
         JSONObject jsonObject = JSON.parseObject(message.toString());
-        String pkgType = jsonObject.getString("RequsetTpye");
+        String pkgType = jsonObject.getString("Type");
 
         if (pkgType.equals("Login")){
             //LoginReq loginReq = JSON.parse(message.toString(), LoginReq.class);
-            JSONObject respJson = new JSONObject();
-            respJson.put("TYPE", "LOGIN");
-            respJson.put("LoginRep", "LOGIN_OK");
-            session.write(respJson.toString() + "\r\n");
+            String resp = processLogin(session.getAttribute(ipAttribute).toString(), message.toString());
+            session.write(resp + "\r\n");
         }else if (pkgType.equals("Heart")){
-            JSONObject HeratObject = new JSONObject();
-            HeratObject.put("TYPE", "HEART");
-            HeratObject.put("HeartRep", "HEART_OK");
-            session.write(HeratObject.toString() + "\r\n");
+            JSONObject HeartJson = new JSONObject();
+            HeartJson.put("Type", "Heart");
+            session.write(HeartJson.toString() + "\r\n");
         }
     }
 
@@ -65,6 +63,8 @@ public class TcpHandler extends IoHandlerAdapter{
         // TODO Auto-generated method stub
         super.sessionClosed(session);
         System.out.println("sessionClosed");
+        DeviceDao dao = new DeviceDao();
+        dao.deleteDeviceByIp(session.getAttribute(ipAttribute).toString());
     }
 
     @Override
@@ -89,6 +89,28 @@ public class TcpHandler extends IoHandlerAdapter{
         // TODO Auto-generated method stub
         super.sessionOpened(session);
         System.out.println("sessionOpened");
+    }
+
+    private String processLogin(String clientIp, String req){
+        JSONObject reqJson = JSON.parseObject(req);
+        Device device = new Device();
+        device.setIp(clientIp);
+        device.setUsername(reqJson.getString("UserName"));
+        device.setServiceName(reqJson.getString("ServiceName"));
+        // 默认状态为开始采集
+        device.setStatus(1);
+
+        DeviceDao dao = new DeviceDao();
+        JSONObject respJson = new JSONObject();
+        respJson.put("Type", "LoginResp");
+        if (dao.getDeviceByServiceName(device.getServiceName()) != null){
+            respJson.put("Status", "Failed");
+            return respJson.toString();
+        }
+
+        dao.addDevice(device);
+        respJson.put("Status", "Ok");
+        return respJson.toString();
     }
 
 }
