@@ -28,7 +28,7 @@ public class DeviceManager  extends HttpServlet{
         String action = req.getParameter("action");
         String ip = req.getParameter("ip");
 
-        if (action != null){
+        if (action != null && ip != null){
             String operator;
             int status = 0;
             if (action.equals("switchOn")){

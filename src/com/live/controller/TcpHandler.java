@@ -93,6 +93,20 @@ public class TcpHandler extends IoHandlerAdapter{
 
     private String processLogin(String clientIp, String req){
         JSONObject reqJson = JSON.parseObject(req);
+        JSONObject respJson = new JSONObject();
+
+        if (!validUser(reqJson.getString("UserName"), reqJson.getString("Password"))){
+            respJson.put("Status", "Failed");
+            respJson.put("Message", "invalid username or password");
+            return respJson.toString();
+        }
+
+        if (!validServiceName(reqJson.getString("ServiceName"))){
+            respJson.put("Status", "Failed");
+            respJson.put("Message", "serviceName already exist");
+            return respJson.toString();
+        }
+
         Device device = new Device();
         device.setIp(clientIp);
         device.setUsername(reqJson.getString("UserName"));
@@ -104,7 +118,7 @@ public class TcpHandler extends IoHandlerAdapter{
         device.setStatus(1);
 
         DeviceDao dao = new DeviceDao();
-        JSONObject respJson = new JSONObject();
+
         respJson.put("Type", "LoginResp");
         if (dao.getDeviceByServiceName(device.getServiceName()) != null){
             respJson.put("Status", "Failed");
@@ -114,6 +128,26 @@ public class TcpHandler extends IoHandlerAdapter{
         dao.addDevice(device);
         respJson.put("Status", "Ok");
         return respJson.toString();
+    }
+
+    private boolean validUser(String userName, String password){
+        UserInfoDao dao = new UserInfoDao();
+        UserInfo userInfo = dao.getUserInfoByUsername(userName);
+        if (userInfo != null && password.equals(userInfo.getPassword())){
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean validServiceName(String serviceName){
+        DeviceDao dao = new DeviceDao();
+        Device device = dao.getDeviceByServiceName(serviceName);
+        if (device == null){
+            return true;
+        }
+
+        return false;
     }
 
 }

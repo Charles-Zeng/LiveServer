@@ -131,4 +131,37 @@ public class DeviceDao {
             dbManager.closeConnection(conn);
         }
     }
+
+    public Device getDeviceByUserName(String username){
+        Device device = null;
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = "select * from device where username = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                device = new Device();
+                device.setIp(rs.getString("ip"));
+                device.setMac(rs.getString("mac"));
+                device.setImei(rs.getString("imei"));
+                device.setGps(rs.getString("gps"));
+                device.setServiceName(rs.getString("serviceName"));
+                device.setUsername(rs.getString("username"));
+                device.setStatus(rs.getInt("status"));
+            }
+
+            rs.close();
+            pstmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbManager.closeConnection(conn);
+        }
+
+        return device;
+    }
 }

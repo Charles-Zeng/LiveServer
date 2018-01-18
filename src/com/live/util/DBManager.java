@@ -32,12 +32,14 @@ public class DBManager {
         Connection conn = null;
         try{
             Class.forName(jdbcDriver);
+            System.out.println("DB config: " + dbUrl + " " + user + " " + password);
             conn = DriverManager.getConnection(dbUrl, user, password);
         }catch (ClassNotFoundException e){
             e.printStackTrace();
         }
         catch (SQLException e){
             e.printStackTrace();
+            System.out.println("SQLException: " + e.getMessage());
         }
 
         return conn;
