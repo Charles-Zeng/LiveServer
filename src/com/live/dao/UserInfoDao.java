@@ -12,7 +12,7 @@ public class UserInfoDao {
         Connection conn = dbManager.getConnection();
         try{
             String sql = " insert into user_info(username, password, tel, name, address, idCardNum, " +
-                    " pushAddress, autoStopPushMinutes) values (?, ?, ?, ?, ?, ?, ?, ?) ";
+                    " pushAddress, autoStopPushMinutes, userStatus, isAdmin) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userInfo.getUsername());
             pstmt.setString(2, userInfo.getPassword());
@@ -22,6 +22,8 @@ public class UserInfoDao {
             pstmt.setString(6, userInfo.getIdCardNum());
             pstmt.setString(7, userInfo.getPushAddress());
             pstmt.setInt(8, userInfo.getAutoStopPushMinutes().intValue());
+            pstmt.setInt(9, userInfo.getUserStatus().intValue());
+            pstmt.setInt(10, userInfo.getIsAdmin().intValue());
             pstmt.executeUpdate();
             pstmt.close();
         }catch (SQLException e){
@@ -51,6 +53,8 @@ public class UserInfoDao {
                 userInfo.setIdCardNum(rs.getString("idCardNum"));
                 userInfo.setPushAddress(rs.getString("pushAddress"));
                 userInfo.setAutoStopPushMinutes(rs.getInt("autoStopPushMinutes"));
+                userInfo.setUserStatus(rs.getInt("userStatus"));
+                userInfo.setIsAdmin(rs.getInt("isAdmin"));
             }
             rs.close();
             pstmt.close();
@@ -82,6 +86,8 @@ public class UserInfoDao {
                 userInfo.setIdCardNum(rs.getString("idCardNum"));
                 userInfo.setPushAddress(rs.getString("pushAddress"));
                 userInfo.setAutoStopPushMinutes(rs.getInt("autoStopPushMinutes"));
+                userInfo.setUserStatus(rs.getInt("userStatus"));
+                userInfo.setIsAdmin(rs.getInt("isAdmin"));
 
                 userInfoList.add(userInfo);
             }
@@ -94,5 +100,40 @@ public class UserInfoDao {
         }
 
         return userInfoList;
+    }
+
+    public void updateUserInfo(UserInfo userInfo){
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = " update user_info set  " +
+                    " password = ifnull(?, password), " +
+                    " tel = ifnull(?, tel), " +
+                    " name = ifnull(?, name), " +
+                    " address = ifnull(?, address), " +
+                    " idCardNum = ifnull(?, idCardNum), " +
+                    " pushAddress = ifnull(?, pushAddress), " +
+                    " autoStopPushMinutes = ifnull(?, autoStopPushMinutes), " +
+                    " userStatus = ifnull(?, userStatus), " +
+                    " isAdmin = ifnull(?, isAdmin) " +
+                    " where username = ? ";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userInfo.getPassword());
+            pstmt.setString(2, userInfo.getTel());
+            pstmt.setString(3, userInfo.getName());
+            pstmt.setString(4, userInfo.getAddress());
+            pstmt.setString(5, userInfo.getIdCardNum());
+            pstmt.setString(6, userInfo.getPushAddress());
+            pstmt.setInt(7, userInfo.getAutoStopPushMinutes().intValue());
+            pstmt.setInt(8, userInfo.getUserStatus().intValue());
+            pstmt.setInt(9, userInfo.getIsAdmin().intValue());
+            pstmt.setString(10, userInfo.getUsername());
+            pstmt.executeUpdate();
+            pstmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbManager.closeConnection(conn);
+        }
     }
 }

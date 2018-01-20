@@ -5,10 +5,11 @@
   Time: 12:01
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<%@page import="com.live.model.UserInfo" %>
 <html>
 <head>
     <title>管理界面</title>
@@ -23,7 +24,9 @@
                 <li><a href="/deviceManager">设备管理</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">登出</a> </li>
+                <li>
+                    <button type="button" class="btn btn-default navbar-btn" onclick="doPost('/logout', {})">登出</button>
+                </li>
             </ul>
         </div>
     </div>
@@ -40,7 +43,13 @@
             <th>身份证号码</th>
             <th>推流地址</th>
             <th>自动停止推流分钟数</th>
-            <th colspan=2>操作</th>
+            <th>用户状态</th>
+            <%
+                UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+                if (userInfo.getIsAdmin() == 1){
+                    out.println("<th colspan=3>操作</th>");
+                }
+            %>
         </tr>
         </thead>
         <tbody>
@@ -53,8 +62,25 @@
                 <td><c:out value="${user.idCardNum}" /></td>
                 <td><c:out value="${user.pushAddress}" /></td>
                 <td><c:out value="${user.autoStopPushMinutes}" /></td>
-                <td><a href="/userManager?action=edit&userId=<c:out value="${user.username}"/>">Update</a></td>
-                <td><a href="/userManager?action=delete&userId=<c:out value="${user.username}"/>">Delete</a></td>
+                <td>
+                    <c:choose>
+                        <c:when test="${user.userStatus} == 0">禁用</c:when>
+                        <c:otherwise>可用</c:otherwise>
+                    </c:choose>
+                </td>
+                <!-- 管理员操作 -->
+                <% if (userInfo.getIsAdmin() == 1){ %>
+                    <c:choose>
+                        <c:when test="${user.userStatus} == 0">
+                            <td><button onclick="doPost('/userManager', {'action':'onUser', 'username':${user.username}})">启用</button></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><button onclick="doPost('/userManager', {'action':'offUser', 'username':${user.username}})">禁用</button></td>
+                        </c:otherwise>
+                    </c:choose>
+                    <td><a href=#>修改</a></td>
+                    <td><a href=#>删除</a></td>
+                <% } %>
             </tr>
         </c:forEach>
         </tbody>
@@ -63,6 +89,7 @@
 
 <script src="/static/jquery/jquery-3.2.1.min.js"></script>
 <script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script src="/static/js/common.js"></script>
 
 </body>
 </html>

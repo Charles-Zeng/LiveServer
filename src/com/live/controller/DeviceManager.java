@@ -22,6 +22,13 @@ public class DeviceManager  extends HttpServlet{
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
 
+        // user login status check
+        HttpSession session = req.getSession(false);
+        if (session == null || session.getAttribute("userInfo") == null){
+            resp.sendRedirect("/login.jsp");
+            return;
+        }
+
         // Set refresh, autoload time as 5 seconds
         //resp.setIntHeader("Refresh", 3);
 

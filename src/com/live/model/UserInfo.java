@@ -9,6 +9,8 @@ public class UserInfo {
     private String idCardNum;
     private String pushAddress;
     private Integer autoStopPushMinutes;
+    private Integer userStatus;
+    private Integer isAdmin;
 
     public UserInfo(){}
 
@@ -76,10 +78,27 @@ public class UserInfo {
         return autoStopPushMinutes;
     }
 
+    public void setUserStatus(Integer userStatus){
+        this.userStatus = userStatus;
+    }
+
+    public Integer getUserStatus() {
+        return userStatus;
+    }
+
+    public void setIsAdmin(Integer isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public Integer getIsAdmin() {
+        return isAdmin;
+    }
+
     @Override
     public String toString(){
         return "UserInfo [username:" + username + ", password:" + password + ", tel:" + tel
                 + ", name:" + name + ", address:" + address + ", idCardNum:" + idCardNum
-                + ", pushAddress:" + pushAddress + ", autoStopPushMinutes:" + autoStopPushMinutes;
+                + ", pushAddress:" + pushAddress + ", autoStopPushMinutes:" + autoStopPushMinutes
+                + ", userStatus:" + userStatus + ", isAdmin:" + isAdmin;
     }
 }

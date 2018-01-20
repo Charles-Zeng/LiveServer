@@ -18,6 +18,8 @@ CREATE TABLE user_info(
   idCardNum varchar(50),
   pushAddress varchar(100),
   autoStopPushMinutes int(100),
+  userStatus int(1) default 1,
+  isAdmin int(1) default 0,
   PRIMARY KEY (`username`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

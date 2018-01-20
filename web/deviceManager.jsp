@@ -5,7 +5,7 @@
   Time: 12:02
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -23,7 +23,9 @@
                 <li class="active"><a href="/deviceManager">设备管理</a> </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">登出</a> </li>
+                <li>
+                    <button type="button" class="btn btn-default navbar-btn" onclick="doPost('/logout', {})">登出</button>
+                </li>
             </ul>
         </div>
     </div>
@@ -62,11 +64,9 @@
                 </td>
                 <td>
                     <c:if test="${device.status == 0}">
-                        <!-- a href="/deviceManager?action=switchOn&ip=<c:out value="${device.ip}"/>">开启采集</--a -->
                         <button onclick="doPost('/deviceManager', {'action':'switchOn', 'ip':'${device.ip}'})">开始采集</button>
                     </c:if>
                     <c:if test="${device.status == 1}">
-                        <!--a href="/deviceManager?action=switchOff&ip=<c:out value="${device.ip}"/>">关闭采集</a -->
                         <button onclick="doPost('/deviceManager', {'action':'switchOff', 'ip':'${device.ip}'})">关闭采集</button>
                     </c:if>
                 </td>
@@ -78,24 +78,7 @@
 
 <script src="/static/jquery/jquery-3.2.1.min.js"></script>
 <script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-
-<script>
-    function doPost (url,args)
-    {
-        var myForm = document.createElement("form");
-        myForm.method = "post";
-        myForm.action = url;
-        for ( var k in args) {
-            var myInput = document.createElement("input");
-            myInput.setAttribute("name", k);
-            myInput.setAttribute("value", args[k]);
-            myForm.appendChild(myInput);
-        }
-        document.body.appendChild(myForm);
-        myForm.submit();
-        document.body.removeChild(myForm);
-    }
-</script>
+<script src="/static/js/common.js"></script>
 
 </body>
 </html>

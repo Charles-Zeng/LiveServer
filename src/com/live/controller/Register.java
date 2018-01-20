@@ -44,7 +44,13 @@ public class Register extends HttpServlet{
         userInfo.setIdCardNum(req.getParameter("idCardNum"));
         userInfo.setPushAddress(req.getParameter("pushAddress"));
         userInfo.setAutoStopPushMinutes(Integer.valueOf(req.getParameter("autoStopPushMinutes")));
-
+        userInfo.setUserStatus(Integer.valueOf(1)); // 注册时用户状态为可用
+        int isAdmin = 0;
+        if (req.getParameter("isAdmin") != null
+                && req.getParameter("isAdmin").equals("on")){
+            isAdmin = 1;
+        }
+        userInfo.setIsAdmin(Integer.valueOf(isAdmin));
 
         dao.addUserInfo(userInfo);
 

@@ -16,10 +16,12 @@
 <head>
     <title>注册界面</title>
     <link href="/static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for register -->
+    <link href="/static/css/register.css" rel="stylesheet">
 </head>
 <body>
 
-  <div id="register" align="center">
+  <!--div id="register" align="center">
       <form action="/register" method="post">
           <table border="1" style="border-collapse:collapse;">
               <tr>
@@ -61,6 +63,102 @@
                   <td colspan="2" align="right"><input type="submit" value="注册"></td>
               </tr>
           </table>
+      </form>
+  </div-->
+
+  <div class="container">
+      <form class="form-horizontal" action="/register" method="post">
+
+          <!-- 用户名 -->
+          <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">用户名</label>
+              <div class="col-sm-10">
+                  <input type="text" class="form-control" id="username" name="username">
+              </div>
+          </div>
+
+          <!-- 密码 -->
+          <div class="form-group">
+              <label for="password" class="col-sm-2 control-label">密 码</label>
+              <div class="col-sm-10">
+                  <input type="password" class="form-control" id="password" name="password">
+              </div>
+          </div>
+
+          <!-- 确认密码 -->
+          <div class="form-group">
+              <label for="confirmPwd" class="col-sm-2 control-label">确认密码</label>
+              <div class="col-sm-10">
+                  <input type="password" class="form-control" id="confirmPwd" name="confirmPwd">
+              </div>
+          </div>
+
+          <!-- 电话 -->
+          <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">电 话</label>
+              <div class="col-sm-10">
+                  <input type="text" class="form-control" id="tel" name="tel">
+              </div>
+          </div>
+
+          <!-- 姓名 -->
+          <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">姓 名</label>
+              <div class="col-sm-10">
+                  <input type="text" class="form-control" id="name" name="name">
+              </div>
+          </div>
+
+          <!-- 地址 -->
+          <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">地 址</label>
+              <div class="col-sm-10">
+                  <input type="text" class="form-control" id="address" name="address">
+              </div>
+          </div>
+
+          <!-- 身份证号码 -->
+          <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">身份证号码</label>
+              <div class="col-sm-10">
+                  <input type="text" class="form-control" id="idCardNum" name="idCardNum">
+              </div>
+          </div>
+
+          <!-- 推流地址 -->
+          <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">推流地址</label>
+              <div class="col-sm-10">
+                  <input type="text" class="form-control" id="pushAddress" name="pushAddress">
+              </div>
+          </div>
+
+          <!-- 自动停止推流分钟数 -->
+          <div class="form-group">
+              <label for="username" class="col-sm-2 control-label">自动停止推流分钟数</label>
+              <div class="col-sm-10">
+                  <input type="number" class="form-control" id="autoStopPushMinutes" name="autoStopPushMinutes">
+              </div>
+          </div>
+
+          <!-- 是否是管理员 -->
+          <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                      <label>
+                          <input type="checkbox" name="isAdmin"> 管理员
+                      </label>
+                  </div>
+              </div>
+          </div>
+
+          <!-- 注册按钮 -->
+          <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-default">注 册</button>
+              </div>
+          </div>
+
       </form>
   </div>
 

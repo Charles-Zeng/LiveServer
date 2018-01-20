@@ -24,6 +24,12 @@ public class Login extends HttpServlet {
         String userName = req.getParameter("username");
         String password = req.getParameter("password");
 
+        if (userName == null || password == null)
+        {
+            resp.sendRedirect("/login.jsp");
+            return;
+        }
+
         if (userName.isEmpty() || password.isEmpty())
         {
             req.setAttribute("message", "用户名密码不能为空");
@@ -39,6 +45,10 @@ public class Login extends HttpServlet {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
             return;
         }
+
+        HttpSession session = req.getSession();
+        session.setAttribute("userInfo", userInfo);
+
         resp.sendRedirect("/userManager");
     }
 }

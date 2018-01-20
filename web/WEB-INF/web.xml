@@ -8,6 +8,11 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
 
+    <!-- set session timeout 10 minutes -->
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>com.live.controller.Login</servlet-class>
@@ -31,6 +36,11 @@
     <servlet>
         <servlet-name>DeviceManager</servlet-name>
         <servlet-class>com.live.controller.DeviceManager</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>com.live.controller.Logout</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -56,6 +66,11 @@
     <servlet-mapping>
         <servlet-name>DeviceManager</servlet-name>
         <url-pattern>/deviceManager</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     
     <listener>
