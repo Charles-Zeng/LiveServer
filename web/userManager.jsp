@@ -10,10 +10,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@page import="com.live.model.UserInfo" %>
+
 <html>
 <head>
     <title>管理界面</title>
-    <link href="/static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation" style="background-color:steelblue;font-size: large">
@@ -64,22 +65,24 @@
                 <td><c:out value="${user.autoStopPushMinutes}" /></td>
                 <td>
                     <c:choose>
-                        <c:when test="${user.userStatus} == 0">禁用</c:when>
+                        <c:when test="${user.userStatus == 0}">禁用</c:when>
                         <c:otherwise>可用</c:otherwise>
                     </c:choose>
                 </td>
                 <!-- 管理员操作 -->
                 <% if (userInfo.getIsAdmin() == 1){ %>
-                    <c:choose>
-                        <c:when test="${user.userStatus} == 0">
-                            <td><button onclick="doPost('/userManager', {'action':'onUser', 'username':${user.username}})">启用</button></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td><button onclick="doPost('/userManager', {'action':'offUser', 'username':${user.username}})">禁用</button></td>
-                        </c:otherwise>
-                    </c:choose>
-                    <td><a href=#>修改</a></td>
-                    <td><a href=#>删除</a></td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${user.userStatus == 0}">
+                                <button onclick="doPost('/userManager', {'action':'onUser', 'username':'${user.username}'})">启用</button>
+                            </c:when>
+                            <c:otherwise>
+                                <button onclick="doPost('/userManager', {'action':'offUser', 'username':'${user.username}'})">禁用</button>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td><button onclick="c()">修改</button></td>
+                    <td><a href='/userManager'>删除</a></td>
                 <% } %>
             </tr>
         </c:forEach>
@@ -87,9 +90,31 @@
     </table>
 </div>
 
-<script src="/static/jquery/jquery-3.2.1.min.js"></script>
-<script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-<script src="/static/js/common.js"></script>
+<script src="static/jquery/jquery-3.2.1.min.js"></script>
+<script src="static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+    function doPost (url,args)
+    {
+        console.log(url, args);
+        var myForm = document.createElement("form");
+        myForm.method = "post";
+        myForm.action = url;
+        for ( var k in args) {
+            var myInput = document.createElement("input");
+            myInput.setAttribute("name", k);
+            myInput.setAttribute("value", args[k]);
+            myForm.appendChild(myInput);
+        }
+        document.body.appendChild(myForm);
+        myForm.submit();
+        document.body.removeChild(myForm);
+    }
+
+    function c(){
+        alert('单击了我');
+    }
+</script>
 
 </body>
 </html>

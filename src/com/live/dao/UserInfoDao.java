@@ -124,10 +124,42 @@ public class UserInfoDao {
             pstmt.setString(4, userInfo.getAddress());
             pstmt.setString(5, userInfo.getIdCardNum());
             pstmt.setString(6, userInfo.getPushAddress());
-            pstmt.setInt(7, userInfo.getAutoStopPushMinutes().intValue());
-            pstmt.setInt(8, userInfo.getUserStatus().intValue());
-            pstmt.setInt(9, userInfo.getIsAdmin().intValue());
+            if (userInfo.getAutoStopPushMinutes() != null){
+                pstmt.setInt(7, userInfo.getAutoStopPushMinutes());
+            } else {
+                pstmt.setNull(7, Types.INTEGER);
+            }
+
+            if (userInfo.getUserStatus() != null){
+                pstmt.setInt(8, userInfo.getUserStatus());
+            } else {
+                pstmt.setNull(8, Types.INTEGER);
+            }
+
+            if (userInfo.getIsAdmin() != null){
+                pstmt.setInt(9, userInfo.getIsAdmin());
+            } else {
+                pstmt.setNull(9, Types.INTEGER);
+            }
+
             pstmt.setString(10, userInfo.getUsername());
+            pstmt.executeUpdate();
+            pstmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbManager.closeConnection(conn);
+        }
+    }
+
+    public void updateUserStatus(String userName, int userStatus){
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = " update user_info set  userStatus = ? where username = ? ";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userStatus);
+            pstmt.setString(2, userName);
             pstmt.executeUpdate();
             pstmt.close();
         }catch (SQLException e){

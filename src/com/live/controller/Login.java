@@ -48,6 +48,7 @@ public class Login extends HttpServlet {
 
         HttpSession session = req.getSession();
         session.setAttribute("userInfo", userInfo);
+        session.setAttribute("isAdmin", userInfo.getIsAdmin().intValue());
 
         resp.sendRedirect("/userManager");
     }

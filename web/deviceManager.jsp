@@ -78,7 +78,26 @@
 
 <script src="/static/jquery/jquery-3.2.1.min.js"></script>
 <script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-<script src="/static/js/common.js"></script>
+<!--script src="/static/js/common.js"></script-->
+
+<script>
+    function doPost (url,args)
+    {
+        console.log(url, args);
+        var myForm = document.createElement("form");
+        myForm.method = "post";
+        myForm.action = url;
+        for ( var k in args) {
+            var myInput = document.createElement("input");
+            myInput.setAttribute("name", k);
+            myInput.setAttribute("value", args[k]);
+            myForm.appendChild(myInput);
+        }
+        document.body.appendChild(myForm);
+        myForm.submit();
+        document.body.removeChild(myForm);
+    }
+</script>
 
 </body>
 </html>

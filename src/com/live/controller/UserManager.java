@@ -32,14 +32,12 @@ public class UserManager extends HttpServlet{
         String action = req.getParameter("action");
         String username = req.getParameter("username");
         if (action != null && username != null){
-            UserInfo userInfo = new UserInfo();
+            int userStatus = 0;
             if (action.equals("onUser")){
-                userInfo.setUserStatus(Integer.valueOf(1));
-            } else {
-                userInfo.setUserStatus(Integer.valueOf(0));
+                userStatus = 1;
             }
             UserInfoDao dao = new UserInfoDao();
-            dao.updateUserInfo(userInfo);
+            dao.updateUserStatus(username, userStatus);
         }
 
         UserInfoDao dao = new UserInfoDao();

@@ -14,3 +14,5 @@ function doPost (url,args)
     myForm.submit();
     document.body.removeChild(myForm);
 }
+
+
