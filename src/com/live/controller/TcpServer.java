@@ -44,6 +44,10 @@ public class TcpServer {
         }
     }
 
+    public void stop(){
+        acceptor.dispose();
+    }
+
     void sendMsgToClient(String ip, String msg){
         System.out.println("sendMsgToClient: ip " + ip + " msg " + msg);
         for (IoSession ioSession : acceptor.getManagedSessions().values()){
