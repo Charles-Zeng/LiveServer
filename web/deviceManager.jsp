@@ -32,6 +32,20 @@
 </nav>
 
 <div class="container">
+    <form class="form-inline" action="/deviceManager" method="post">
+        <div class="form-group">
+            <label for="username">用户名</label>
+            <input type="text" class="form-control" id="username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="serviceName">服务名</label>
+            <input type="text" class="form-control" id="serviceName" name="serviceName">
+        </div>
+        <button type="submit" class="btn btn-default">搜索</button>
+    </form>
+</div>
+
+<div class="container">
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>

@@ -3,6 +3,7 @@ package com.live.controller;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.live.dao.*;
@@ -53,10 +54,23 @@ public class DeviceManager  extends HttpServlet{
             updateDao.updateDeviceStatusByIp(ip, status);
         }
 
+        String username = req.getParameter("username");
+        String serviceName = req.getParameter("serviceName");
         DeviceDao dao = new DeviceDao();
+        List<Device> devices;
+        if (username != null || serviceName != null){
+            devices = filterDevices(username, serviceName);
+        } else {
+            devices = dao.getAllDevice();
+        }
 
-        req.setAttribute("devices", dao.getAllDevice());
+        req.setAttribute("devices", devices);
         req.getRequestDispatcher("/deviceManager.jsp").forward(req, resp);
+    }
+
+    private List<Device> filterDevices(String username, String serviceName){
+        DeviceDao dao = new DeviceDao();
+        return dao.filterDevices(username, serviceName);
     }
 
 }

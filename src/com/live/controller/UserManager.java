@@ -32,17 +32,43 @@ public class UserManager extends HttpServlet{
         String action = req.getParameter("action");
         String username = req.getParameter("username");
         if (action != null && username != null){
-            int userStatus = 0;
             if (action.equals("onUser")){
-                userStatus = 1;
+                processOnUser(username);
             }
-            UserInfoDao dao = new UserInfoDao();
-            dao.updateUserStatus(username, userStatus);
+
+            if (action.equals("offUser")){
+                processOffUser(username);
+            }
+
+            if (action.equals("deleteUser")){
+                processDelete(username);
+            }
         }
 
         UserInfoDao dao = new UserInfoDao();
 
         req.setAttribute("users", dao.getAllUserInfo());
         req.getRequestDispatcher("/userManager.jsp").forward(req, resp);
+    }
+
+    private void processOnUser(String userName){
+        UserInfoDao dao = new UserInfoDao();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(userName);
+        userInfo.setUserStatus(Integer.valueOf(1));
+        dao.updateUserInfo(userInfo);
+    }
+
+    private void processOffUser(String userName){
+        UserInfoDao dao = new UserInfoDao();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(userName);
+        userInfo.setUserStatus(Integer.valueOf(0));
+        dao.updateUserInfo(userInfo);
+    }
+
+    private void processDelete(String userName){
+        UserInfoDao dao = new UserInfoDao();
+        dao.deleteUserInfoByUsername(userName);
     }
 }

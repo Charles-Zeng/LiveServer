@@ -164,4 +164,51 @@ public class DeviceDao {
 
         return device;
     }
+
+    public List<Device> filterDevices(String username, String serviceName){
+        List<Device> devices = new ArrayList<Device>();
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = " select * from device where username like ? " +
+                    "and serviceName like ? ";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            if (username != null){
+                pstmt.setString(1, "%" + username + "%");
+            } else {
+                pstmt.setString(1, "%");
+            }
+
+            if (serviceName != null){
+                pstmt.setString(2, "%" + serviceName + "%");
+            } else {
+                pstmt.setString(2, "%");
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()){
+                Device device = new Device();
+                device.setIp(rs.getString("ip"));
+                device.setMac(rs.getString("mac"));
+                device.setImei(rs.getString("imei"));
+                device.setGps(rs.getString("gps"));
+                device.setServiceName(rs.getString("serviceName"));
+                device.setUsername(rs.getString("username"));
+                device.setStatus(rs.getInt("status"));
+                devices.add(device);
+            }
+
+            rs.close();
+            pstmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbManager.closeConnection(conn);
+        }
+
+        return devices;
+    }
 }

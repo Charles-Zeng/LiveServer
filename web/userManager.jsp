@@ -82,7 +82,9 @@
                         </c:choose>
                     </td>
                     <td><button onclick="c()">修改</button></td>
-                    <td><a href='/userManager'>删除</a></td>
+                    <td>
+                        <button onclick="doPost('/userManager', {'action':'deleteUser', 'username':'${user.username}'})">删除</button>
+                    </td>
                 <% } %>
             </tr>
         </c:forEach>

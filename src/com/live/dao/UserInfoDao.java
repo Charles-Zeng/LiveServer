@@ -118,12 +118,43 @@ public class UserInfoDao {
                     " isAdmin = ifnull(?, isAdmin) " +
                     " where username = ? ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, userInfo.getPassword());
-            pstmt.setString(2, userInfo.getTel());
-            pstmt.setString(3, userInfo.getName());
-            pstmt.setString(4, userInfo.getAddress());
-            pstmt.setString(5, userInfo.getIdCardNum());
-            pstmt.setString(6, userInfo.getPushAddress());
+
+            if (userInfo.getPassword() != null){
+                pstmt.setString(1, userInfo.getPassword());
+            }else {
+                pstmt.setNull(1, Types.VARCHAR);
+            }
+
+            if (userInfo.getTel() != null){
+                pstmt.setString(2, userInfo.getTel());
+            }else {
+                pstmt.setNull(2, Types.VARCHAR);
+            }
+
+            if (userInfo.getName() != null){
+                pstmt.setString(3, userInfo.getName());
+            }else {
+                pstmt.setNull(3, Types.VARCHAR);
+            }
+
+            if (userInfo.getAddress() != null){
+                pstmt.setString(4, userInfo.getAddress());
+            }else {
+                pstmt.setNull(4, Types.VARCHAR);
+            }
+
+            if (userInfo.getIdCardNum() != null){
+                pstmt.setString(5, userInfo.getIdCardNum());
+            }else {
+                pstmt.setNull(5, Types.VARCHAR);
+            }
+
+            if (userInfo.getPushAddress() != null){
+                pstmt.setString(6, userInfo.getPushAddress());
+            }else {
+                pstmt.setNull(6, Types.VARCHAR);
+            }
+
             if (userInfo.getAutoStopPushMinutes() != null){
                 pstmt.setInt(7, userInfo.getAutoStopPushMinutes());
             } else {
@@ -152,14 +183,13 @@ public class UserInfoDao {
         }
     }
 
-    public void updateUserStatus(String userName, int userStatus){
+    public void deleteUserInfoByUsername(String userName){
         DBManager dbManager = new DBManager();
         Connection conn = dbManager.getConnection();
         try{
-            String sql = " update user_info set  userStatus = ? where username = ? ";
+            String sql = " delete from user_info where username = ? ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, userStatus);
-            pstmt.setString(2, userName);
+            pstmt.setString(1, userName);
             pstmt.executeUpdate();
             pstmt.close();
         }catch (SQLException e){

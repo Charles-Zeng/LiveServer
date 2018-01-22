@@ -95,7 +95,7 @@ public class TcpHandler extends IoHandlerAdapter{
         JSONObject reqJson = JSON.parseObject(req);
         JSONObject respJson = new JSONObject();
 
-        if (!validUser(reqJson.getString("UserName"), reqJson.getString("Password"))){
+        if (!validUser(reqJson.getString("UserName"), reqJson.getString("UserPwd"))){
             respJson.put("Status", "Failed");
             respJson.put("Message", "invalid username or password");
             return respJson.toString();
