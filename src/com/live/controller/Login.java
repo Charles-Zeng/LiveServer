@@ -46,6 +46,12 @@ public class Login extends HttpServlet {
             return;
         }
 
+        if (userInfo.getUserStatus().intValue() == 0){
+            req.setAttribute("message", "您已被禁用，请联系管理员");
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            return;
+        }
+
         HttpSession session = req.getSession();
         session.setAttribute("userInfo", userInfo);
         session.setAttribute("isAdmin", userInfo.getIsAdmin().intValue());

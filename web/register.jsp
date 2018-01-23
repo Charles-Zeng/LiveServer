@@ -67,7 +67,7 @@
   </div-->
 
   <div class="container">
-      <form class="form-horizontal" action="/register" method="post">
+      <form class="form-horizontal" action="/register" onsubmit="return validate_form(this)" method="post">
 
           <!-- 用户名 -->
           <div class="form-group">
@@ -164,6 +164,74 @@
 
   <script src="/static/jquery/jquery-3.2.1.min.js"></script>
   <script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+    function validate_required(field,alertText)
+    {
+        with (field)
+        {
+            if (value==null||value==""){
+                alert(alertText);
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    function validate_form(thisForm)
+    {
+        with (thisForm)
+        {
+            if (validate_required(username, "用户名不能为空") == false) {
+                username.focus();
+                return false;
+            }
+
+            if (validate_required(password, "密码不能为空") == false) {
+                password.focus();
+                return false;
+            }
+
+            if (validate_required(confirmPwd, "确认密码不能为空") == false) {
+                confirmPwd.focus();
+                return false;
+            }
+
+            if (validate_required(tel, "电话不能为空") == false) {
+                tel.focus();
+                return false;
+            }
+
+            if (validate_required(name, "姓名不能为空") == false) {
+                name.focus();
+                return false;
+            }
+
+            if (validate_required(address, "地址不能为空") == false) {
+                address.focus();
+                return false;
+            }
+
+            if (validate_required(idCardNum, "身份证不能为空") == false) {
+                idCardNum.focus();
+                return false;
+            }
+
+            if (validate_required(pushAddress, "推流地址不能为空") == false) {
+                pushAddress.focus();
+                return false;
+            }
+
+            if (validate_required(autoStopPushMinutes, "自动停止推流分钟数不能为空") == false) {
+                autoStopPushMinutes.focus();
+                return false;
+            }
+
+            return true;
+        }
+    }
+</script>
 
 </body>
 </html>

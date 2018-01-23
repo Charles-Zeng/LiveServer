@@ -48,7 +48,7 @@
             <%
                 UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
                 if (userInfo.getIsAdmin() == 1){
-                    out.println("<th colspan=3>操作</th>");
+                    out.println("<th colspan=2>操作</th>");
                 }
             %>
         </tr>
@@ -81,7 +81,7 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td><button onclick="c()">修改</button></td>
+                    <!--td><button onclick="c()">修改</button></td-->
                     <td>
                         <button onclick="doPost('/userManager', {'action':'deleteUser', 'username':'${user.username}'})">删除</button>
                     </td>

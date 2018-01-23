@@ -44,7 +44,10 @@ public class TcpHandler extends IoHandlerAdapter{
             //LoginReq loginReq = JSON.parse(message.toString(), LoginReq.class);
             String resp = processLogin(session.getAttribute(ipAttribute).toString(), message.toString());
             session.write(resp + "\r\n");
-        }else if (pkgType.equals("Heart")){
+        } else if (pkgType.equals("StatusPush")) {
+            processStatusPush(session.getAttribute(ipAttribute).toString(), message.toString());
+        }
+        else if (pkgType.equals("Heart")){
             JSONObject HeartJson = new JSONObject();
             HeartJson.put("Type", "Heart");
             session.write(HeartJson.toString() + "\r\n");
@@ -95,14 +98,18 @@ public class TcpHandler extends IoHandlerAdapter{
         JSONObject reqJson = JSON.parseObject(req);
         JSONObject respJson = new JSONObject();
 
+        respJson.put("Type", "LoginResp");
+
         if (!validUser(reqJson.getString("UserName"), reqJson.getString("UserPwd"))){
             respJson.put("Status", "Failed");
+            respJson.put("ErrorCode", "-1");
             respJson.put("Message", "invalid username or password");
             return respJson.toString();
         }
 
         if (!validServiceName(reqJson.getString("ServiceName"))){
             respJson.put("Status", "Failed");
+            respJson.put("ErrorCode", "-2");
             respJson.put("Message", "serviceName already exist");
             return respJson.toString();
         }
@@ -119,13 +126,17 @@ public class TcpHandler extends IoHandlerAdapter{
 
         DeviceDao dao = new DeviceDao();
 
-        respJson.put("Type", "LoginResp");
+
         if (dao.getDeviceByServiceName(device.getServiceName()) != null){
             respJson.put("Status", "Failed");
             return respJson.toString();
         }
 
         dao.addDevice(device);
+
+        UserInfoDao userDao = new UserInfoDao();
+        UserInfo userInfo = userDao.getUserInfoByUsername(reqJson.getString("UserName"));
+        respJson.put("AutoStopPushMinutes", String.valueOf(userInfo.getAutoStopPushMinutes()));
         respJson.put("Status", "Ok");
         return respJson.toString();
     }
@@ -148,6 +159,19 @@ public class TcpHandler extends IoHandlerAdapter{
         }
 
         return false;
+    }
+
+    private void processStatusPush(String clientIp, String req){
+        JSONObject reqJson = JSON.parseObject(req);
+
+        String pushStatus = reqJson.getString("Status");
+        int status = 1;
+        if ("Stoped".equals(pushStatus)){
+            status = 0;
+        }
+
+        DeviceDao dao = new DeviceDao();
+        dao.updateDeviceStatusByIp(clientIp, status);
     }
 
 }
