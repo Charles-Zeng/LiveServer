@@ -211,4 +211,65 @@ public class DeviceDao {
 
         return devices;
     }
+
+    public void updateDevice(Device device){
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = " update device set  " +
+                    " ip = ifnull(?, ip), " +
+                    " mac = ifnull(?, mac), " +
+                    " imei = ifnull(?, imei), " +
+                    " gps = ifnull(?, gps), " +
+                    " username = ifnull(?, username), " +
+                    " status = ifnull(?, status) " +
+                    " where serviceName = ? ";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            if (device.getIp() != null){
+                pstmt.setString(1, device.getIp());
+            }else {
+                pstmt.setNull(1, Types.VARCHAR);
+            }
+
+            if (device.getMac() != null){
+                pstmt.setString(2, device.getMac());
+            }else {
+                pstmt.setNull(2, Types.VARCHAR);
+            }
+
+            if (device.getImei() != null){
+                pstmt.setString(3, device.getImei());
+            }else {
+                pstmt.setNull(3, Types.VARCHAR);
+            }
+
+            if (device.getGps() != null){
+                pstmt.setString(4, device.getGps());
+            }else {
+                pstmt.setNull(4, Types.VARCHAR);
+            }
+
+            if (device.getUsername() != null){
+                pstmt.setString(5, device.getUsername());
+            }else {
+                pstmt.setNull(5, Types.VARCHAR);
+            }
+
+            if (device.getStatus() != null){
+                pstmt.setInt(6, device.getStatus());
+            } else {
+                pstmt.setNull(6, Types.INTEGER);
+            }
+
+            pstmt.setString(7, device.getServiceName());
+            pstmt.executeUpdate();
+            pstmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println(e.getErrorCode() + " " + e.getMessage());
+        }finally {
+            dbManager.closeConnection(conn);
+        }
+    }
 }

@@ -198,4 +198,29 @@ public class UserInfoDao {
             dbManager.closeConnection(conn);
         }
     }
+
+    public boolean isExistAdmin(){
+        boolean existAdmin = false;
+        DBManager dbManager = new DBManager();
+        Connection conn = dbManager.getConnection();
+        try{
+            String sql = " SELECT COUNT(*) FROM user_info WHERE isAdmin = 1";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                if (rs.getInt(1) > 0) {
+                    existAdmin = true;
+                }
+            }
+            rs.close();
+            pstmt.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbManager.closeConnection(conn);
+        }
+
+        return existAdmin;
+    }
 }

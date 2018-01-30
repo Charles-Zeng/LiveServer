@@ -1,13 +1,13 @@
 package com.live.model;
 
 public class Device {
-    private String ip = "";
-    private String mac = "";
-    private String imei = "";
-    private String gps = "";
-    private String serviceName = "";
-    private String username = "";
-    private int status = 1;
+    private String ip;
+    private String mac;
+    private String imei;
+    private String gps;
+    private String serviceName;
+    private String username;
+    private Integer status;
 
     public Device() {}
 
@@ -59,11 +59,11 @@ public class Device {
         return username;
     }
 
-    public void setStatus(int status){
+    public void setStatus(Integer status){
         this.status = status;
     }
 
-    public int getStatus(){
+    public Integer getStatus(){
         return status;
     }
 }

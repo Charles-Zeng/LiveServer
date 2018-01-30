@@ -43,6 +43,21 @@
         <servlet-class>com.live.controller.Logout</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>CheckAdmin</servlet-name>
+        <servlet-class>com.live.controller.CheckAdmin</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminLogin</servlet-name>
+        <servlet-class>com.live.controller.AdminLogin</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminRegister</servlet-name>
+        <servlet-class>com.live.controller.AdminRegister</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -71,6 +86,21 @@
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CheckAdmin</servlet-name>
+        <url-pattern>/checkAdmin</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminLogin</servlet-name>
+        <url-pattern>/adminLogin</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminRegister</servlet-name>
+        <url-pattern>/adminRegister</url-pattern>
     </servlet-mapping>
     
     <listener>

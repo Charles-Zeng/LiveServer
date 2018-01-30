@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: works-new
-  Date: 2018/1/4
-  Time: 14:26
+  User: CharlesZeng
+  Date: 2018-01-30
+  Time: 22:19
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
@@ -14,7 +14,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>登陆界面</title>
+    <title>管理员登陆界面</title>
     <link href="/static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for login -->
     <link href="/static/css/signin.css" rel="stylesheet">
@@ -23,16 +23,13 @@
 
 <div class="container">
 
-    <form class="form-signin" action="/login" method="post">
-        <h2 class="form-signin-heading">登 陆</h2>
-        <label for="username" class="sr-only">用户名</label>
-        <input type="text" name="username" id="username" class="form-control" placeholder="用户名" required autofocus>
-        <label for="password" class="sr-only">密 码</label>
-        <input type="password" name="password" id="password" class="form-control" placeholder="密码" required>
+    <form class="form-signin" action="adminLogin" method="post">
+        <h2 class="form-signin-heading">管理员登陆</h2>
+        <label for="username" class="sr-only">管理员用户名</label>
+        <input type="text" name="username" id="username" class="form-control" placeholder="管理员用户名" required autofocus>
+        <label for="password" class="sr-only">管理员密码</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="管理员密码" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登 陆</button>
-        <a href="register.jsp" class="register">注 册</a>
-        <br/>
-        <a href="/checkAdmin" class="register">注册管理员</a>
         <h4 style = "color:red;" id = "errorMsg"><% if(message != null) out.print(message); %></h4>
     </form>
 

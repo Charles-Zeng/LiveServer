@@ -46,8 +46,9 @@ public class TcpHandler extends IoHandlerAdapter{
             session.write(resp + "\r\n");
         } else if (pkgType.equals("StatusPush")) {
             processStatusPush(session.getAttribute(ipAttribute).toString(), message.toString());
-        }
-        else if (pkgType.equals("Heart")){
+        } else if (pkgType.equals("LoginGps")){
+            processLoginGps(session.getAttribute(ipAttribute).toString(), message.toString());
+        } else if (pkgType.equals("Heart")){
             JSONObject HeartJson = new JSONObject();
             HeartJson.put("Type", "Heart");
             session.write(HeartJson.toString() + "\r\n");
@@ -172,6 +173,19 @@ public class TcpHandler extends IoHandlerAdapter{
 
         DeviceDao dao = new DeviceDao();
         dao.updateDeviceStatusByIp(clientIp, status);
+    }
+
+    private void processLoginGps(String clientIp, String req){
+        JSONObject reqJson = JSON.parseObject(req);
+
+        String gps = reqJson.getString("Gps");
+        String serviceName = reqJson.getString("ServiceName");
+
+        DeviceDao dao = new DeviceDao();
+        Device device = new Device();
+        device.setGps(gps);
+        device.setServiceName(serviceName);
+        dao.updateDevice(device);
     }
 
 }
