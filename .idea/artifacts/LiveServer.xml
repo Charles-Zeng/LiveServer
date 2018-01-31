@@ -1,0 +1,24 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="LiveServer">
+    <output-path>$PROJECT_DIR$/out/artifacts/LiveServer</output-path>
+    <root id="archive" name="LiveServer.war">
+      <element id="javaee-facet-resources" facet="LiveServer/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="LiveServer" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="fastjson-1.2.44" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/fastjson-1.2.44.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-5.1.45-bin.jar" />
+          <element id="library" level="project" name="jstl" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/jstl.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/standard.jar" />
+          <element id="library" level="project" name="mina-core-2.0.16" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/mina-core-2.0.16.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/slf4j-api-1.7.21.jar" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

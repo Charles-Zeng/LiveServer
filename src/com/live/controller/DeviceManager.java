@@ -36,6 +36,8 @@ public class DeviceManager  extends HttpServlet{
         String action = req.getParameter("action");
         String ip = req.getParameter("ip");
 
+        DeviceDao dao = new DeviceDao();
+
         if (action != null && ip != null){
             String operator;
             int status = 0;
@@ -46,17 +48,21 @@ public class DeviceManager  extends HttpServlet{
                 operator = "Off";
                 status = 0;
             }
-            JSONObject cmdJson = new JSONObject();
-            cmdJson.put("Type", "Cmd");
-            cmdJson.put("Operator", operator);
-            TcpServer.getInstance().sendMsgToClient(ip, cmdJson.toString() + "\r\n");
-            DeviceDao updateDao = new DeviceDao();
-            updateDao.updateDeviceStatusByIp(ip, status);
+
+            Device device = dao.getDeviceByIp(ip);
+
+            if (!device.getStatus().equals(status)) {
+                JSONObject cmdJson = new JSONObject();
+                cmdJson.put("Type", "Cmd");
+                cmdJson.put("Operator", operator);
+                TcpServer.getInstance().sendMsgToClient(ip, cmdJson.toString() + "\r\n");
+                dao.updateDeviceStatusByIp(ip, status);
+            }
         }
 
         String username = req.getParameter("username");
         String serviceName = req.getParameter("serviceName");
-        DeviceDao dao = new DeviceDao();
+
         List<Device> devices;
         if (username != null || serviceName != null){
             devices = filterDevices(username, serviceName);
