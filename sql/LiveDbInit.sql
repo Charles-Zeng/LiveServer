@@ -35,5 +35,22 @@ CREATE TABLE device(
   serviceName VARCHAR (100) UNIQUE ,
   username VARCHAR(255) NOT NULL,
   status INT(1) NOT NULL DEFAULT 0,
+  login_time VARCHAR (50),
   PRIMARY KEY(`ip`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `device_history`
+--
+DROP TABLE IF EXISTS `device_history`;
+CREATE TABLE device_history(
+  username VARCHAR(255) NOT NULL,
+  ip VARCHAR (50),
+  mac VARCHAR (100),
+  imei VARCHAR (100),
+  gps VARCHAR (100),
+  service_name VARCHAR (100),
+  login_time VARCHAR (50),
+  logout_time VARCHAR (50),
+  duration_time BIGINT
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

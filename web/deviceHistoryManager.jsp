@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: CharlesZeng
-  Date: 2018-01-06
-  Time: 12:02
+  Date: 2018-02-08
+  Time: 23:00
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>管理界面</title>
+    <title>历史记录管理界面</title>
     <link href="/static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -20,8 +20,8 @@
         <div>
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="/userManager">用户管理</a></li>
-                <li class="active"><a href="/deviceManager">设备管理</a> </li>
-                <li><a href="/deviceHistoryManager">历史记录</a> </li>
+                <li><a href="/deviceManager">设备管理</a> </li>
+                <li class="active"><a href="/deviceHistoryManager">历史记录</a> </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -33,7 +33,7 @@
 </nav>
 
 <div class="container">
-    <form class="form-inline" action="/deviceManager" method="post">
+    <form class="form-inline" action="/deviceHistoryManager" method="post">
         <div class="form-group">
             <label for="username">用户名</label>
             <input type="text" class="form-control" id="username" name="username">
@@ -50,41 +50,29 @@
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
+            <th>用户名</th>
             <th>IP</th>
             <th>MAC</th>
             <th>IMEI</th>
             <th>GPS</th>
             <th>服务名称</th>
-            <th>用户名</th>
-            <th>采集状态</th>
-            <th>操作</th>
+            <th>登陆时间</th>
+            <th>登出时间</th>
+            <th>在线时长</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${devices}" var="deviceHistory">
+        <c:forEach items="${deviceHistories}" var="deviceHistory">
             <tr>
+                <td><c:out value="${deviceHistory.username}" /></td>
                 <td><c:out value="${deviceHistory.ip}" /></td>
                 <td><c:out value="${deviceHistory.mac}" /></td>
                 <td><c:out value="${deviceHistory.imei}" /></td>
                 <td><c:out value="${deviceHistory.gps}" /></td>
                 <td><c:out value="${deviceHistory.serviceName}" /></td>
-                <td><c:out value="${deviceHistory.username}" /></td>
-                <td>
-                    <c:if test="${deviceHistory.status == 0}">
-                        <c:out value="关闭"></c:out>
-                    </c:if>
-                    <c:if test="${deviceHistory.status == 1}">
-                        <c:out value="开启"></c:out>
-                    </c:if>
-                </td>
-                <td>
-                    <c:if test="${deviceHistory.status == 0}">
-                        <button onclick="doPost('/deviceManager', {'action':'switchOn', 'ip':'${deviceHistory.ip}'})">开始采集</button>
-                    </c:if>
-                    <c:if test="${deviceHistory.status == 1}">
-                        <button onclick="doPost('/deviceManager', {'action':'switchOff', 'ip':'${deviceHistory.ip}'})">关闭采集</button>
-                    </c:if>
-                </td>
+                <td><fmt:formatDate pattern="yyyy-MM-dd  HH:mm:ss" value="${deviceHistory.loginTime}" /></td>
+                <td><fmt:formatDate pattern="yyyy-MM-dd  HH:mm:ss" value="${deviceHistory.logoutTime}" /></td>
+                <td><c:out value="${deviceHistory.durationTime}s" /></td>
             </tr>
         </c:forEach>
         </tbody>

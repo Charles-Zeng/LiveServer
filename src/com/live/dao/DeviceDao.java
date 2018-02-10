@@ -1,18 +1,24 @@
 package com.live.dao;
 
 import java.sql.*;
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.*;
 import com.live.model.*;
 import com.live.util.*;
+import java.text.SimpleDateFormat;
 
 public class DeviceDao {
+
+    final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
     public void addDevice(Device device){
         DBManager dbManager = new DBManager();
         Connection conn = dbManager.getConnection();
         try{
-            String sql = " insert into device(ip, mac, imei, gps, serviceName, username, status) " +
-                    " values (?, ?, ?, ?, ?, ?, ?) ";
+            String sql = " insert into device(ip, mac, imei, gps, serviceName, username, status, login_time) " +
+                    " values (?, ?, ?, ?, ?, ?, ?, ?) ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, device.getIp());
             pstmt.setString(2, device.getMac());
@@ -21,6 +27,7 @@ public class DeviceDao {
             pstmt.setString(5, device.getServiceName());
             pstmt.setString(6, device.getUsername());
             pstmt.setInt(7, device.getStatus());
+            pstmt.setString(8,dateFormat.format(device.getLoginTime()));
             pstmt.executeUpdate();
             pstmt.close();
 
@@ -51,13 +58,16 @@ public class DeviceDao {
                 device.setServiceName(rs.getString("serviceName"));
                 device.setUsername(rs.getString("username"));
                 device.setStatus(rs.getInt("status"));
+                device.setLoginTime(dateFormat.parse(rs.getString("login_time")));
             }
 
             rs.close();
             pstmt.close();
-        }catch (SQLException e){
+        } catch (SQLException e){
             e.printStackTrace();
-        }finally {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
             dbManager.closeConnection(conn);
         }
 
@@ -83,6 +93,7 @@ public class DeviceDao {
                 device.setServiceName(rs.getString("serviceName"));
                 device.setUsername(rs.getString("username"));
                 device.setStatus(rs.getInt("status"));
+                device.setLoginTime(dateFormat.parse(rs.getString("login_time")));
                 devices.add(device);
             }
 
@@ -90,7 +101,9 @@ public class DeviceDao {
             pstmt.close();
         }catch (SQLException e){
             e.printStackTrace();
-        }finally {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
             dbManager.closeConnection(conn);
         }
 
@@ -152,13 +165,16 @@ public class DeviceDao {
                 device.setServiceName(rs.getString("serviceName"));
                 device.setUsername(rs.getString("username"));
                 device.setStatus(rs.getInt("status"));
+                device.setLoginTime(dateFormat.parse(rs.getString("login_time")));
             }
 
             rs.close();
             pstmt.close();
-        }catch (SQLException e){
+        } catch (SQLException e){
             e.printStackTrace();
-        }finally {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
             dbManager.closeConnection(conn);
         }
 
@@ -198,6 +214,7 @@ public class DeviceDao {
                 device.setServiceName(rs.getString("serviceName"));
                 device.setUsername(rs.getString("username"));
                 device.setStatus(rs.getInt("status"));
+                device.setLoginTime(dateFormat.parse(rs.getString("login_time")));
                 devices.add(device);
             }
 
@@ -205,7 +222,9 @@ public class DeviceDao {
             pstmt.close();
         }catch (SQLException e){
             e.printStackTrace();
-        }finally {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
             dbManager.closeConnection(conn);
         }
 
@@ -223,6 +242,7 @@ public class DeviceDao {
                     " gps = ifnull(?, gps), " +
                     " username = ifnull(?, username), " +
                     " status = ifnull(?, status) " +
+                    " login_time = ifnull(?, login_time)" +
                     " where serviceName = ? ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -262,7 +282,13 @@ public class DeviceDao {
                 pstmt.setNull(6, Types.INTEGER);
             }
 
-            pstmt.setString(7, device.getServiceName());
+            if (device.getLoginTime() != null){
+                pstmt.setString(7, dateFormat.format(device.getLoginTime()));
+            } else {
+                pstmt.setNull(7, Types.VARCHAR);
+            }
+
+            pstmt.setString(8, device.getServiceName());
             pstmt.executeUpdate();
             pstmt.close();
         }catch (SQLException e){
@@ -293,13 +319,16 @@ public class DeviceDao {
                 device.setServiceName(rs.getString("serviceName"));
                 device.setUsername(rs.getString("username"));
                 device.setStatus(rs.getInt("status"));
+                device.setLoginTime(dateFormat.parse(rs.getString("login_time")));
             }
 
             rs.close();
             pstmt.close();
-        }catch (SQLException e){
+        } catch (SQLException e){
             e.printStackTrace();
-        }finally {
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
             dbManager.closeConnection(conn);
         }
 

@@ -23,6 +23,7 @@
             <ul class="nav navbar-nav navbar-left">
                 <li class="active"><a href="/userManager">用户管理</a></li>
                 <li><a href="/deviceManager">设备管理</a></li>
+                <li><a href="/deviceHistoryManager">历史记录</a> </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>

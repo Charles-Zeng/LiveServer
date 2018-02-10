@@ -1,5 +1,7 @@
 package com.live.model;
 
+import java.util.Date;
+
 public class Device {
     private String ip;
     private String mac;
@@ -8,6 +10,7 @@ public class Device {
     private String serviceName;
     private String username;
     private Integer status;
+    private Date loginTime;
 
     public Device() {}
 
@@ -65,5 +68,13 @@ public class Device {
 
     public Integer getStatus(){
         return status;
+    }
+
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public Date getLoginTime() {
+        return loginTime;
     }
 }

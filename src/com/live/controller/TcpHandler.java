@@ -1,6 +1,7 @@
 package com.live.controller;
 
 import java.net.*;
+import java.util.Date;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -68,6 +69,25 @@ public class TcpHandler extends IoHandlerAdapter{
         super.sessionClosed(session);
         System.out.println("sessionClosed");
         DeviceDao dao = new DeviceDao();
+        Device device = dao.getDeviceByIp(session.getAttribute(ipAttribute).toString());
+        if (device != null) {
+            DeviceHistory deviceHistory = new DeviceHistory();
+            deviceHistory.setUsername(device.getUsername());
+            deviceHistory.setIp(device.getIp());
+            deviceHistory.setMac(device.getMac());
+            deviceHistory.setImei(device.getImei());
+            deviceHistory.setGps(device.getGps());
+            deviceHistory.setServiceName(device.getServiceName());
+            deviceHistory.setLoginTime(device.getLoginTime());
+            Date logoutTime = new Date();
+            deviceHistory.setLogoutTime(logoutTime);
+            long duration = logoutTime.getTime() - device.getLoginTime().getTime();
+            deviceHistory.setDurationTime(duration/1000);
+
+            DeviceHistoryDao deviceHistoryDao = new DeviceHistoryDao();
+            deviceHistoryDao.addDeviceHistory(deviceHistory);
+        }
+
         dao.deleteDeviceByIp(session.getAttribute(ipAttribute).toString());
     }
 
@@ -124,6 +144,7 @@ public class TcpHandler extends IoHandlerAdapter{
         device.setGps(reqJson.getString("Gps"));
         // 默认状态为开始采集
         device.setStatus(1);
+        device.setLoginTime(new Date());
 
         DeviceDao dao = new DeviceDao();
 
