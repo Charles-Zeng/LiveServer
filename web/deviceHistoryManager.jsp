@@ -9,6 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<%@ page import="com.live.model.UserInfo" %>
+
 <html>
 <head>
     <title>历史记录管理界面</title>
@@ -34,10 +36,18 @@
 
 <div class="container">
     <form class="form-inline" action="/deviceHistoryManager" method="post">
-        <div class="form-group">
-            <label for="username">用户名</label>
-            <input type="text" class="form-control" id="username" name="username">
-        </div>
+        <%
+            UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+            if (userInfo.getIsAdmin() == 1){
+         %>
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" class="form-control" id="username" name="username">
+                </div>
+        <%
+            }
+        %>
+
         <div class="form-group">
             <label for="serviceName">服务名</label>
             <input type="text" class="form-control" id="serviceName" name="serviceName">

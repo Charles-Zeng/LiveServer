@@ -61,28 +61,28 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${devices}" var="deviceHistory">
+        <c:forEach items="${devices}" var="device">
             <tr>
-                <td><c:out value="${deviceHistory.ip}" /></td>
-                <td><c:out value="${deviceHistory.mac}" /></td>
-                <td><c:out value="${deviceHistory.imei}" /></td>
-                <td><c:out value="${deviceHistory.gps}" /></td>
-                <td><c:out value="${deviceHistory.serviceName}" /></td>
-                <td><c:out value="${deviceHistory.username}" /></td>
+                <td><c:out value="${device.ip}" /></td>
+                <td><c:out value="${device.mac}" /></td>
+                <td><c:out value="${device.imei}" /></td>
+                <td><c:out value="${device.gps}" /></td>
+                <td><c:out value="${device.serviceName}" /></td>
+                <td><c:out value="${device.username}" /></td>
                 <td>
-                    <c:if test="${deviceHistory.status == 0}">
+                    <c:if test="${device.status == 0}">
                         <c:out value="关闭"></c:out>
                     </c:if>
-                    <c:if test="${deviceHistory.status == 1}">
+                    <c:if test="${device.status == 1}">
                         <c:out value="开启"></c:out>
                     </c:if>
                 </td>
                 <td>
-                    <c:if test="${deviceHistory.status == 0}">
-                        <button onclick="doPost('/deviceManager', {'action':'switchOn', 'ip':'${deviceHistory.ip}'})">开始采集</button>
+                    <c:if test="${device.status == 0}">
+                        <button onclick="doPost('/deviceManager', {'action':'switchOn', 'ip':'${device.ip}'})">开始采集</button>
                     </c:if>
-                    <c:if test="${deviceHistory.status == 1}">
-                        <button onclick="doPost('/deviceManager', {'action':'switchOff', 'ip':'${deviceHistory.ip}'})">关闭采集</button>
+                    <c:if test="${device.status == 1}">
+                        <button onclick="doPost('/deviceManager', {'action':'switchOff', 'ip':'${device.ip}'})">关闭采集</button>
                     </c:if>
                 </td>
             </tr>

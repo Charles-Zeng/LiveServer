@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.live.dao.*;
 import com.live.model.DeviceHistory;
+import com.live.model.UserInfo;
 
 public class DeviceHistoryManager extends HttpServlet {
 
@@ -29,8 +30,12 @@ public class DeviceHistoryManager extends HttpServlet {
             return;
         }
 
+        UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
         String username = req.getParameter("username");
         String serviceName = req.getParameter("serviceName");
+        if (userInfo.getIsAdmin() == 0) {
+            username = userInfo.getUsername();
+        }
 
         DeviceHistoryDao dao = new DeviceHistoryDao();
         List<DeviceHistory> deviceHistories;
