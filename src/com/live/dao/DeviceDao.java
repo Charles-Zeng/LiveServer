@@ -241,7 +241,7 @@ public class DeviceDao {
                     " imei = ifnull(?, imei), " +
                     " gps = ifnull(?, gps), " +
                     " username = ifnull(?, username), " +
-                    " status = ifnull(?, status) " +
+                    " status = ifnull(?, status), " +
                     " login_time = ifnull(?, login_time)" +
                     " where serviceName = ? ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
