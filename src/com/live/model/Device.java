@@ -77,4 +77,12 @@ public class Device {
     public Date getLoginTime() {
         return loginTime;
     }
+
+    @Override
+    public String toString(){
+        return "Device{ip:" + ip + "mac:" + mac + "imei:" + imei
+                + "gps:" + gps + "serviceName:" + serviceName
+                + "username:" + username + "status:" + status
+                + "}";
+    }
 }

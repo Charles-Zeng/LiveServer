@@ -96,9 +96,9 @@ public class UserInfo {
 
     @Override
     public String toString(){
-        return "UserInfo [username:" + username + ", password:" + password + ", tel:" + tel
+        return "UserInfo: {username:" + username + ", password:" + password + ", tel:" + tel
                 + ", name:" + name + ", address:" + address + ", idCardNum:" + idCardNum
                 + ", pushAddress:" + pushAddress + ", autoStopPushMinutes:" + autoStopPushMinutes
-                + ", userStatus:" + userStatus + ", isAdmin:" + isAdmin;
+                + ", userStatus:" + userStatus + ", isAdmin:" + isAdmin + "}";
     }
 }

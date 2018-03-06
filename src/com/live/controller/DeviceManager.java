@@ -70,6 +70,7 @@ public class DeviceManager  extends HttpServlet{
             devices = dao.getAllDevice();
         }
 
+        System.out.println("devices:" + devices);
         req.setAttribute("devices", devices);
         req.getRequestDispatcher("/deviceManager.jsp").forward(req, resp);
     }

@@ -23,6 +23,11 @@ public class TcpHandler extends IoHandlerAdapter{
         // TODO Auto-generated method stub
         super.exceptionCaught(session, cause);
         System.out.println("exceptionCaught " + cause);
+
+        if (session.getAttribute(ipAttribute) != null){
+            DeviceDao dao = new DeviceDao();
+            dao.deleteDeviceByIp(session.getAttribute(ipAttribute).toString());
+        }
     }
 
     @Override
