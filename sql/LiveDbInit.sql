@@ -35,6 +35,7 @@ CREATE TABLE device(
   serviceName VARCHAR (100) UNIQUE ,
   username VARCHAR(255) NOT NULL,
   status INT(1) NOT NULL DEFAULT 0,
+  push_addr VARCHAR(100) DEFAULT '',
   login_time VARCHAR (50),
   PRIMARY KEY(`ip`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

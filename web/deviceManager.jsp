@@ -58,6 +58,8 @@
             <th>用户名</th>
             <th>采集状态</th>
             <th>操作</th>
+            <th>生成采集地址</th>
+            <th>采集地址</th>
         </tr>
         </thead>
         <tbody>
@@ -85,6 +87,8 @@
                         <button onclick="doPost('/deviceManager', {'action':'switchOff', 'ip':'${device.ip}'})">关闭采集</button>
                     </c:if>
                 </td>
+                <td> <button onclick="doPost('/deviceManager', {'generateAddr':'push', 'serviceName':'${device.serviceName}'})">生成采集地址</button> </td>
+                <td><c:out value="${device.pushAddr}" /></td>
             </tr>
         </c:forEach>
         </tbody>

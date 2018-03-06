@@ -60,8 +60,19 @@ public class DeviceManager  extends HttpServlet{
             }
         }
 
-        String username = req.getParameter("username");
+        String generateAddr = req.getParameter("generateAddr");
         String serviceName = req.getParameter("serviceName");
+        if (generateAddr != null && serviceName != null) {
+            String pushAddrBase = this.getInitParameter("pushAddrBase");
+            String pushAddr = pushAddrBase + serviceName;
+            Device device = new Device();
+            device.setPushAddr(pushAddr);
+            device.setServiceName(serviceName);
+            dao.updateDevice(device);
+            System.out.println("update device pushAddr, serviceName:" + serviceName + " pushAddr:" + pushAddr);
+        }
+
+        String username = req.getParameter("username");
 
         List<Device> devices;
         if (username != null || serviceName != null){

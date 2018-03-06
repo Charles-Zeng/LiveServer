@@ -10,6 +10,7 @@ public class Device {
     private String serviceName;
     private String username;
     private Integer status;
+    private String pushAddr;
     private Date loginTime;
 
     public Device() {}
@@ -70,6 +71,14 @@ public class Device {
         return status;
     }
 
+    public void setPushAddr(String pushAddr) {
+        this.pushAddr = pushAddr;
+    }
+
+    public String getPushAddr() {
+        return pushAddr;
+    }
+
     public void setLoginTime(Date loginTime) {
         this.loginTime = loginTime;
     }
@@ -83,6 +92,6 @@ public class Device {
         return "Device{ip:" + ip + "mac:" + mac + "imei:" + imei
                 + "gps:" + gps + "serviceName:" + serviceName
                 + "username:" + username + "status:" + status
-                + "}";
+                + "pushAddr:" + pushAddr + "}";
     }
 }

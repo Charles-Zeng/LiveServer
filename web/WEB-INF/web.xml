@@ -36,6 +36,10 @@
     <servlet>
         <servlet-name>DeviceManager</servlet-name>
         <servlet-class>com.live.controller.DeviceManager</servlet-class>
+        <init-param>
+            <param-name>pushAddrBase</param-name>
+            <param-value>http://localhost:8080/push?serviceName=</param-value>
+        </init-param>
     </servlet>
     
     <servlet>
@@ -61,6 +65,11 @@
     <servlet>
         <servlet-name>DeviceHistoryManager</servlet-name>
         <servlet-class>com.live.controller.DeviceHistoryManager</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>PushManager</servlet-name>
+        <servlet-class>com.live.controller.PushManager</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -111,6 +120,11 @@
     <servlet-mapping>
         <servlet-name>DeviceHistoryManager</servlet-name>
         <url-pattern>/deviceHistoryManager</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>PushManager</servlet-name>
+        <url-pattern>/push</url-pattern>
     </servlet-mapping>
     
     <listener>
